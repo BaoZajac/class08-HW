@@ -28,9 +28,12 @@ else:
         print(','.join(element))
 
     # zapisanie do pliku csv
-    plik_exit = sys.argv[1]
-    with open("plik.csv", "w") as f:
-        writer = csv.writer(f)
-        for linia in lista:
-            writer.writerow(linia)   #TODO: jak pozbyć się tych zbędnych enterów wewnątrz pliku?
-
+    plik_exit = sys.argv[2]
+    rozszerzenie_wyjscia = os.path.splitext(plik_exit)
+    if rozszerzenie_wyjscia[1] == ".csv":
+        with open(sys.argv[2], "w") as f:
+            writer = csv.writer(f)
+            for linia in lista:
+                writer.writerow(linia)   #TODO: jak pozbyć się tych zbędnych enterów wewnątrz pliku?
+    else:
+        print("Bład - zapis do nieobsługiwanego rozszerzenia pliku")
