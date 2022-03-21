@@ -1,14 +1,18 @@
 import csv
 import sys
 import os
+import json
+import pickle
 
 
 # sprawdzenie danych wejściowych z std
 plik_wejsciowy = sys.argv[1]
-if not os.path.isfile(plik_wejsciowy):
+if os.path.splitext(plik_wejsciowy)[1] != ".csv":
+    print("Błąd - nieobsługiwany typ pliku wejściowego")
+elif not os.path.isfile(plik_wejsciowy):
     print("Podano błądny plik wejściowy")
     print("Dostępne pliki w bieżącym katalogu:")
-    pliki = os.system(("ls"))
+    pliki = os.system("ls")
 
 else:
     # otwieranie pliku csv
@@ -27,7 +31,7 @@ else:
     for element in lista:
         print(','.join(element))
 
-    # zapisanie do pliku csv
+    # zapisanie do pliku
     plik_exit = sys.argv[2]
     rozszerzenie_wyjscia = os.path.splitext(plik_exit)
     if rozszerzenie_wyjscia[1] == ".csv":
@@ -35,5 +39,11 @@ else:
             writer = csv.writer(f)
             for linia in lista:
                 writer.writerow(linia)   #TODO: jak pozbyć się tych zbędnych enterów wewnątrz pliku?
+    elif rozszerzenie_wyjscia[1] == ".json":
+        with open(sys.argv[2], "w") as f:
+            json.dump(lista, f)
+    elif rozszerzenie_wyjscia[1] == ".pickle":
+        with open(sys.argv[2], "wb") as f:
+            pickle.dump(lista, f)
     else:
         print("Bład - zapis do nieobsługiwanego rozszerzenia pliku")
