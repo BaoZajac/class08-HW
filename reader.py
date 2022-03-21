@@ -35,10 +35,10 @@ else:
     plik_exit = sys.argv[2]
     rozszerzenie_wyjscia = os.path.splitext(plik_exit)
     if rozszerzenie_wyjscia[1] == ".csv":
-        with open(sys.argv[2], "w") as f:
+        with open(sys.argv[2], "w", newline="") as f:
             writer = csv.writer(f)
             for linia in lista:
-                writer.writerow(linia)   #TODO: jak pozbyć się tych zbędnych enterów wewnątrz pliku?
+                writer.writerow(linia)
     elif rozszerzenie_wyjscia[1] == ".json":
         with open(sys.argv[2], "w") as f:
             json.dump(lista, f)
